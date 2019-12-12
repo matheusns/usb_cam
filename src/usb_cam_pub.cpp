@@ -25,11 +25,14 @@
 //            Luciana Reys 1920856 (@lsnreys)
 //  Professor: Wouter Caarls (@wcaarls)
 
-#include <ros/ros.h>
+#include <camera_info_manager/camera_info_manager.h>
 #include <image_transport/image_transport.h>
-#include <opencv2/highgui/highgui.hpp>
+#include <ros/ros.h>
+
 #include <cv_bridge/cv_bridge.h>
-#include <sstream> // for converting the command line parameter to integer
+#include <opencv2/highgui/highgui.hpp>
+
+#include <sstream>
 
 int main(int argc, char** argv)
 {
@@ -40,7 +43,8 @@ int main(int argc, char** argv)
   ros::NodeHandle nh;
   image_transport::ImageTransport it(nh);
   image_transport::Publisher pub = it.advertise("camera/image", 1);
-
+  ros::Publisher pub_cam_info = nh.advertise<sensor_msgs::CameraInfo>("camera_info", 1); //camera info publisher
+  
   // Convert the passed as command line parameter index for the video device to an integer
   std::istringstream video_sourceCmd(argv[1]);
   int video_source;
@@ -59,6 +63,8 @@ int main(int argc, char** argv)
     // Check if grabbed frame is actually full with some content
     if(!frame.empty()) {
       msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", frame).toImageMsg();
+
+    ///\todo add camera info publisher
       pub.publish(msg);
       cv::waitKey(1);
     }
