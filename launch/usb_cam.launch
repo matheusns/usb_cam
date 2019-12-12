@@ -1,0 +1,21 @@
+<launch>
+    <arg name="respawn" default="false" />
+    <arg name="view" default="true" />
+
+    <!-- Defines the logging level output -->
+    <env name="ROSCONSOLE_CONFIG_FILE" value="$(find visual_obstacle_detection)/config/rosconsole.conf"/>
+
+    <!-- Node setup -->
+    <group ns="img_acquistion">
+        <node name="usb_cam_node" pkg="usb_cam" args="0" type="usb_cam_node" output="screen"
+            respawn="$(arg respawn)">
+            <param name="image_transport" value="raw" />
+        </node>
+
+        <!-- Output viewer -->
+        <node if="$(arg view)" pkg="image_view" type="image_view" name="output_viewer">
+            <param name="image_transport" value="raw" />
+            <remap from="image" to="camera/image"/>
+        </node> 
+    </group>
+</launch>
