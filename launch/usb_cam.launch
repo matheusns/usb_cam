@@ -3,7 +3,7 @@
     <arg name="view" default="true" />
 
     <!-- Defines the logging level output -->
-    <env name="ROSCONSOLE_CONFIG_FILE" value="$(find visual_obstacle_detection)/config/rosconsole.conf"/>
+    <env name="ROSCONSOLE_CONFIG_FILE" value="$(find usb_cam)/config/rosconsole.conf"/>
 
     <!-- Node setup -->
     <group ns="img_acquistion">
