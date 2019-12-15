@@ -1,6 +1,6 @@
 <launch>
     <arg name="respawn" default="false" />
-    <arg name="view" default="true" />
+    <arg name="view" default="false" />
 
     <!-- Defines the logging level output -->
     <env name="ROSCONSOLE_CONFIG_FILE" value="$(find usb_cam)/config/rosconsole.conf"/>
